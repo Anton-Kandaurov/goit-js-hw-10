@@ -1,7 +1,12 @@
-function fetchCountries(countryName) {
-    return fetch(
-        `https://restcountries.com/v3.1/name/${countryName}?fields=name,flags,capital,population,languages`
-    )
-};
+const BASE_URL = 'https://restcountries.com/v3.1';
 
-export default {fetchCountries}
+export function fetchCountries(name) {
+  return fetch(
+    `${BASE_URL}/name/${name}?fields=name,capital,population,flags,languages`
+  ).then(request => {
+    if (request.ok) {
+      return request.json();
+    }
+    throw new Error(request.status);
+  });
+}
